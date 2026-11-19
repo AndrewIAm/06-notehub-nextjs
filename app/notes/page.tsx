@@ -1,39 +1,24 @@
-// 'use client';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { fetchNotes } from '@/src/lib/api';
+import NotesClient from './Notes.client';
 
-// import { useState } from 'react';
-// import { getNotes, Note } from '@/src/lib/api';
-// import NoteList from '@/components/NoteList/NoteList';
-
-// const Notes = () => {
-//   const [notes, setNotes] = useState<Note[]>([]);
-
-//   const handleClick = async () => {
-//     const response = await getNotes();
-//     setNotes(response.notes);
-//   };
-
-//   return (
-//     <section>
-//       <h1>Notes List</h1>
-//       <button onClick={handleClick}>Get My Notes</button>
-//       {notes.length > 0 && <NoteList notes={notes} />}
-//     </section>
-//   );
-// };
-
-//export default Notes;
-
-import NoteList from '@/components/NoteList/NoteList';
-import { getNotes } from '@/src/lib/api';
+export const dynamic = 'force-dynamic';
 
 const Notes = async () => {
-  const response = await getNotes();
+  const queryClient = new QueryClient();
+
+  await queryClient.query({
+    queryKey: ['notes', 1, ''],
+    queryFn: () => fetchNotes({ page: 1, perPage: 12, search: '' }),
+    staleTime: 30_000,
+  });
 
   return (
-    <section>
-      <h1>Notes List</h1>
-      {response?.notes?.length > 0 && <NoteList notes={response.notes} />}
-    </section>
+    <main>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <NotesClient />
+      </HydrationBoundary>
+    </main>
   );
 };
 

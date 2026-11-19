@@ -1,20 +1,7 @@
-// import Image from 'next/image';
-// import styles from './page.module.css';
+import Home from '@/components/Home/Home';
 
-// export default function Home() {
-//   return (
-//     <div className={styles.page}>
-//       <main className={styles.main}></main>
-//     </div>
-//   );
-// }
-
-const Home = () => {
-  return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  );
+const Page = () => {
+  return <Home />;
 };
 
-export default Home;
+export default Page;
