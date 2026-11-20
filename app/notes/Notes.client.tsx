@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useDebouncedCallback } from 'use-debounce';
-import { fetchNotes } from '@/src/lib/api';
+import { fetchNotes } from '@/lib/api';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import NoteList from '@/components/NoteList/NoteList';
 import Pagination from '@/components/Pagination/Pagination';
@@ -34,11 +34,7 @@ const NotesClient = () => {
         <SearchBox onChange={handleSearchChange} />
 
         {data?.totalPages && data.totalPages > 1 && (
-          <Pagination
-            pageCount={data.totalPages}
-            currentPage={page}
-            onPageChange={setPage}
-          />
+          <Pagination pageCount={data.totalPages} currentPage={page} onPageChange={setPage} />
         )}
 
         <button className={css.button} onClick={() => setIsModalOpen(true)}>
