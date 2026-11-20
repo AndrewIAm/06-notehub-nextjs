@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 const Notes = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.query({
+  await queryClient.prefetchQuery({
     queryKey: ['notes', 1, ''],
     queryFn: () => fetchNotes({ page: 1, perPage: 12, search: '' }),
     staleTime: 30_000,
