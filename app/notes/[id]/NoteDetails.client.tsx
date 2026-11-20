@@ -11,7 +11,7 @@ const NoteDetailsClient = () => {
   const {
     data: note,
     isLoading,
-    error,
+    isError,
   } = useQuery({
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
@@ -20,7 +20,7 @@ const NoteDetailsClient = () => {
 
   if (isLoading) return <p>Loading, please wait...</p>;
 
-  if (error || !note) return <p>Something went wrong.</p>;
+  if (isError || !note) return <p>Something went wrong.</p>;
 
   const formattedDate = `Created at: ${note.createdAt}`;
 
